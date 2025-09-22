@@ -153,7 +153,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { Link, router } from '@inertiajs/vue3'
-import { route } from '../../vendor/tightenco/ziggy/dist/index.esm.js'
 import {
   ListTodo,
   Menu,
@@ -186,6 +185,9 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   title: 'TaskManager'
 })
+
+// Global route function (available via ZiggyVue plugin)
+declare const route: any
 
 // State
 const showingNavigationDropdown = ref(false)

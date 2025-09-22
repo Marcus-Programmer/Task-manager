@@ -158,7 +158,6 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 import { Link } from '@inertiajs/vue3'
-import { route } from '../../../vendor/tightenco/ziggy/dist/index.esm.js'
 import { Loader2, AlertCircle } from 'lucide-vue-next'
 
 // Components
@@ -172,6 +171,9 @@ import { useAuth } from '@/composables/useAuth'
 
 // Use auth store
 const { handleRegister, loading, hasError, getError, clearErrors } = useAuth()
+
+// Global route function (available via ZiggyVue plugin)
+declare const route: any
 
 // Form data
 const form = reactive({
