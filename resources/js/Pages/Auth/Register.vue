@@ -158,7 +158,7 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 import { Link } from '@inertiajs/vue3'
-import { route } from 'ziggy-js'
+import { route } from '../../../vendor/tightenco/ziggy/dist/index.esm.js'
 import { Loader2, AlertCircle } from 'lucide-vue-next'
 
 // Components

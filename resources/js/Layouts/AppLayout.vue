@@ -153,7 +153,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { Link, router } from '@inertiajs/vue3'
-import { route } from 'ziggy-js'
+import { route } from '../../vendor/tightenco/ziggy/dist/index.esm.js'
 import {
   ListTodo,
   Menu,
