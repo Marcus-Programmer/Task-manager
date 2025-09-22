@@ -39,7 +39,7 @@ const buttonVariants = cva(
   }
 )
 
-interface ButtonProps extends VariantProps<typeof buttonVariants> {
+interface ButtonProps extends /* @vue-ignore */ VariantProps<typeof buttonVariants> {
   as?: string
 }
 
