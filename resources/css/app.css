@@ -52,6 +52,11 @@
     border-color: hsl(var(--border));
   }
 
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+
 
   /* =======================
      MODO CLARO - Light Mode
@@ -120,6 +125,11 @@
 
   /* Cards e modais no modo escuro */
   .dark .bg-card {
+    background-color: hsl(222.2 84% 4.9%) !important;
+    color: hsl(210 40% 98%) !important;
+  }
+
+  .dark .bg-white {
     background-color: hsl(222.2 84% 4.9%) !important;
     color: hsl(210 40% 98%) !important;
   }
