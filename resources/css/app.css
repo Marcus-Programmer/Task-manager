@@ -52,10 +52,6 @@
     border-color: hsl(var(--border));
   }
 
-  body {
-    background-color: hsl(var(--background));
-    color: hsl(var(--foreground));
-  }
 
   /* =======================
      MODO CLARO - Light Mode
@@ -85,10 +81,6 @@
     color: rgb(17, 24, 39) !important; /* gray-900 */
   }
 
-  :root .bg-white {
-    background-color: white !important;
-    color: rgb(17, 24, 39) !important;
-  }
 
   :root .text-card-foreground {
     color: rgb(17, 24, 39) !important; /* gray-900 */
@@ -132,10 +124,6 @@
     color: hsl(210 40% 98%) !important;
   }
 
-  .dark .bg-white {
-    background-color: hsl(222.2 84% 4.9%) !important;
-    color: hsl(210 40% 98%) !important;
-  }
 
   .dark .text-card-foreground {
     color: hsl(210 40% 98%) !important;
