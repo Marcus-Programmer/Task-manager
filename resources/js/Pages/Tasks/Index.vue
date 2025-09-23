@@ -77,7 +77,7 @@
 
       <!-- Filters -->
       <TaskFiltersComponent
-        :filters="filters"
+        :filters="props.filters"
         @filters-change="handleFiltersChange"
         @reset="handleResetFilters"
       />
@@ -113,10 +113,10 @@
       </div>
 
       <!-- Pagination -->
-      <div v-if="tasks && tasks.last_page > 1" class="flex items-center justify-between">
+      <div v-if="props.tasks && props.tasks.last_page > 1" class="flex items-center justify-between">
         <div class="flex items-center text-sm text-gray-700 dark:text-gray-300">
           <span>
-            Showing {{ tasks.from }} to {{ tasks.to }} of {{ tasks.total }} results
+            Showing {{ props.tasks.from }} to {{ props.tasks.to }} of {{ props.tasks.total }} results
           </span>
         </div>
 
@@ -203,7 +203,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed } from 'vue'
+import { router } from '@inertiajs/vue3'
 import {
   Plus,
   ListTodo,
@@ -224,47 +225,33 @@ import TaskCard from '@/Components/Task/TaskCard.vue'
 import TaskForm from '@/Components/Task/TaskForm.vue'
 import TaskFiltersComponent from '@/Components/Task/TaskFilters.vue'
 
-// Composables
-import { useTasks } from '@/composables/useTasks'
+// Global route function
+declare const route: any
 
 // Props from Inertia
 const props = defineProps<TaskIndexProps>()
-
-// Use tasks composable
-const {
-  tasks,
-  taskList,
-  filters,
-  loading,
-  errors,
-  hasFilters,
-  taskCounts,
-  currentPage,
-  lastPage,
-  handleTaskCreate,
-  handleTaskUpdate,
-  handleTaskDelete,
-  handleStatusChange,
-  applyFilters,
-  resetFilters,
-  goToPage,
-  setCurrentTask,
-  clearErrors
-} = useTasks()
 
 // Local state
 const showCreateModal = ref(false)
 const editingTask = ref<Task | null>(null)
 const deletingTask = ref<Task | null>(null)
-
-// Initialize data from props
-onMounted(() => {
-  // Set initial data from Inertia props
-  tasks.value = props.tasks
-  filters.value = props.filters
-})
+const loading = ref(false)
+const errors = ref<Record<string, string>>({})
 
 // Computed
+const taskList = computed(() => props.tasks?.data || [])
+const taskCounts = computed(() => {
+  const counts = { pending: 0, in_progress: 0, done: 0, total: 0 }
+  taskList.value.forEach(task => {
+    counts[task.status]++
+    counts.total++
+  })
+  return counts
+})
+const hasFilters = computed(() => !!(props.filters.search || props.filters.status))
+const currentPage = computed(() => props.tasks?.current_page || 1)
+const lastPage = computed(() => props.tasks?.last_page || 1)
+
 const visiblePages = computed(() => {
   const pages = []
   const start = Math.max(1, currentPage.value - 2)
@@ -279,50 +266,103 @@ const visiblePages = computed(() => {
 
 // Methods
 const handleFiltersChange = (newFilters: TaskFilters) => {
-  applyFilters(newFilters)
+  const params = new URLSearchParams()
+  if (newFilters.search) params.set('search', newFilters.search)
+  if (newFilters.status) params.set('status', newFilters.status)
+
+  router.get(`${route('tasks.index')}?${params}`, {}, {
+    preserveState: true,
+    preserveScroll: true
+  })
 }
 
 const handleResetFilters = () => {
-  resetFilters()
+  router.get(route('tasks.index'), {}, {
+    preserveState: true,
+    preserveScroll: true
+  })
 }
 
 const handleEditTask = (task: Task) => {
   editingTask.value = task
-  setCurrentTask(task)
 }
 
 const handleDeleteTask = (task: Task) => {
   deletingTask.value = task
 }
 
-const handleTaskSubmit = async (data: TaskFormData) => {
-  clearErrors()
+const handleStatusChange = (taskId: number, status: string) => {
+  loading.value = true
+  router.post(`/tasks/${taskId}/status`, { status }, {
+    preserveState: true,
+    preserveScroll: true,
+    onFinish: () => {
+      loading.value = false
+    }
+  })
+}
 
-  let success = false
+const handleTaskSubmit = (data: TaskFormData) => {
+  errors.value = {}
+  loading.value = true
 
   if (editingTask.value) {
-    success = await handleTaskUpdate(editingTask.value, data)
+    router.put(`/tasks/${editingTask.value.id}`, data, {
+      onSuccess: () => {
+        handleCloseModal()
+      },
+      onError: (formErrors) => {
+        errors.value = formErrors
+      },
+      onFinish: () => {
+        loading.value = false
+      }
+    })
   } else {
-    success = await handleTaskCreate(data)
-  }
-
-  if (success) {
-    handleCloseModal()
+    router.post('/tasks', data, {
+      onSuccess: () => {
+        handleCloseModal()
+      },
+      onError: (formErrors) => {
+        errors.value = formErrors
+      },
+      onFinish: () => {
+        loading.value = false
+      }
+    })
   }
 }
 
 const handleCloseModal = () => {
   showCreateModal.value = false
   editingTask.value = null
-  clearErrors()
+  errors.value = {}
 }
 
-const confirmDelete = async () => {
+const goToPage = (page: number) => {
+  if (page >= 1 && page <= lastPage.value) {
+    const params = new URLSearchParams({ page: page.toString() })
+    if (props.filters.search) params.set('search', props.filters.search)
+    if (props.filters.status) params.set('status', props.filters.status)
+
+    router.get(`${route('tasks.index')}?${params}`, {}, {
+      preserveState: true,
+      preserveScroll: true
+    })
+  }
+}
+
+const confirmDelete = () => {
   if (deletingTask.value) {
-    const success = await handleTaskDelete(deletingTask.value)
-    if (success) {
-      deletingTask.value = null
-    }
+    loading.value = true
+    router.delete(`/tasks/${deletingTask.value.id}`, {
+      onSuccess: () => {
+        deletingTask.value = null
+      },
+      onFinish: () => {
+        loading.value = false
+      }
+    })
   }
 }
 </script>

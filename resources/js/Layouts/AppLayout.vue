@@ -38,41 +38,52 @@
             </Button>
 
             <!-- User Dropdown -->
-            <DropdownMenu align="end">
-              <template #trigger>
-                <Button variant="ghost" class="relative h-8 w-8 rounded-full">
-                  <Avatar class="h-8 w-8">
-                    <AvatarFallback>
-                      {{ userInitials }}
-                    </AvatarFallback>
-                  </Avatar>
-                </Button>
-              </template>
+            <div class="relative">
+              <Button
+                variant="ghost"
+                class="relative h-8 w-8 rounded-full"
+                @click="toggleUserDropdown"
+              >
+                <div class="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
+                  <span class="text-sm font-medium text-primary">
+                    {{ userInitials }}
+                  </span>
+                </div>
+              </Button>
 
-              <DropdownMenuContent class="w-56">
-                <DropdownMenuLabel class="font-normal">
-                  <div class="flex flex-col space-y-1">
-                    <p class="text-sm font-medium leading-none">
-                      {{ $page.props.auth.user.name }}
-                    </p>
-                    <p class="text-xs leading-none text-muted-foreground">
-                      {{ $page.props.auth.user.email }}
-                    </p>
+              <!-- Dropdown Menu -->
+              <div
+                v-if="showUserDropdown"
+                class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-card shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+              >
+                <div class="py-1">
+                  <!-- User Info -->
+                  <div class="px-4 py-3 border-b border-border">
+                    <p class="text-sm font-medium text-card-foreground">{{ currentUser?.name }}</p>
+                    <p class="text-xs text-muted-foreground">{{ currentUser?.email }}</p>
                   </div>
-                </DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <Link :href="route('profile.edit')" class="flex items-center w-full">
-                    <Settings class="mr-2 h-4 w-4" />
+
+                  <!-- Profile Link -->
+                  <Link
+                    :href="route('profile.edit')"
+                    class="block px-4 py-2 text-sm text-card-foreground hover:bg-muted flex items-center gap-2"
+                    @click="closeUserDropdown"
+                  >
+                    <Settings class="h-4 w-4" />
                     Edit Profile
                   </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem @click="logout">
-                  <LogOut class="mr-2 h-4 w-4" />
-                  Log out
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+
+                  <!-- Logout -->
+                  <button
+                    @click="handleLogout"
+                    class="w-full text-left px-4 py-2 text-sm text-card-foreground hover:bg-muted flex items-center gap-2"
+                  >
+                    <LogOut class="h-4 w-4" />
+                    Sign out
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
 
           <!-- Mobile menu button -->
@@ -104,18 +115,18 @@
         <div class="border-t pt-4 pb-1">
           <div class="flex items-center px-4">
             <div class="flex-shrink-0">
-              <Avatar class="h-10 w-10">
-                <AvatarFallback>
+              <div class="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
+                <span class="text-sm font-medium text-primary">
                   {{ userInitials }}
-                </AvatarFallback>
-              </Avatar>
+                </span>
+              </div>
             </div>
             <div class="ml-3">
               <div class="text-base font-medium text-foreground">
-                {{ $page.props.auth.user.name }}
+                {{ currentUser?.name }}
               </div>
               <div class="text-sm font-medium text-muted-foreground">
-                {{ $page.props.auth.user.email }}
+                {{ currentUser?.email }}
               </div>
             </div>
           </div>
@@ -128,10 +139,10 @@
               Edit Profile
             </Link>
             <button
-              @click="logout"
+              @click="handleLogout"
               class="block w-full px-4 py-2 text-left text-base font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
             >
-              Log out
+              Sign out
             </button>
           </div>
         </div>
@@ -163,8 +174,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-import { Link, router } from '@inertiajs/vue3'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { Link, router, usePage } from '@inertiajs/vue3'
 import {
   ListTodo,
   Menu,
@@ -178,17 +189,6 @@ import {
 
 // Components
 import Button from '@/components/ui/Button.vue'
-import DropdownMenu from '@/components/ui/DropdownMenu.vue'
-import DropdownMenuTrigger from '@/components/ui/DropdownMenuTrigger.vue'
-import DropdownMenuContent from '@/components/ui/DropdownMenuContent.vue'
-import DropdownMenuItem from '@/components/ui/DropdownMenuItem.vue'
-import DropdownMenuLabel from '@/components/ui/DropdownMenuLabel.vue'
-import DropdownMenuSeparator from '@/components/ui/DropdownMenuSeparator.vue'
-import Avatar from '@/components/ui/Avatar.vue'
-import AvatarFallback from '@/components/ui/AvatarFallback.vue'
-
-// Composables
-import { useAuth } from '@/composables/useAuth'
 
 // Props
 interface Props {
@@ -204,10 +204,23 @@ declare const route: any
 
 // State
 const showingNavigationDropdown = ref(false)
+const showUserDropdown = ref(false)
 const isDark = ref(false)
 
+// Get current user from Inertia page props
+const page = usePage()
+const currentUser = computed(() => page.props.auth?.user)
+
 // Computed
-const { logout: authLogout, userInitials } = useAuth()
+const userInitials = computed(() => {
+  if (!currentUser.value?.name) return 'U'
+  return currentUser.value.name
+    .split(' ')
+    .map((n: string) => n[0])
+    .join('')
+    .toUpperCase()
+    .slice(0, 2)
+})
 
 // Methods
 const toggleTheme = () => {
@@ -216,8 +229,28 @@ const toggleTheme = () => {
   localStorage.setItem('theme', isDark.value ? 'dark' : 'light')
 }
 
-const logout = async () => {
-  await authLogout()
+const toggleUserDropdown = () => {
+  showUserDropdown.value = !showUserDropdown.value
+}
+
+const closeUserDropdown = () => {
+  showUserDropdown.value = false
+}
+
+const handleLogout = () => {
+  router.post(route('logout'), {}, {
+    onFinish: () => {
+      closeUserDropdown()
+    }
+  })
+}
+
+// Close dropdown when clicking outside
+const handleClickOutside = (event: MouseEvent) => {
+  const target = event.target as HTMLElement
+  if (!target.closest('.relative')) {
+    closeUserDropdown()
+  }
 }
 
 // Initialize theme
@@ -227,5 +260,11 @@ onMounted(() => {
 
   isDark.value = savedTheme === 'dark' || (!savedTheme && prefersDark)
   document.documentElement.classList.toggle('dark', isDark.value)
+
+  document.addEventListener('click', handleClickOutside)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside)
 })
 </script>
