@@ -186,6 +186,7 @@ import {
   AlertCircle,
   Settings
 } from 'lucide-vue-next'
+import { useTheme } from '@/composables/useTheme'
 
 // Components
 import Button from '@/components/ui/Button.vue'
@@ -205,7 +206,9 @@ declare const route: any
 // State
 const showingNavigationDropdown = ref(false)
 const showUserDropdown = ref(false)
-const isDark = ref(false)
+
+// Theme management
+const { isDark, toggleTheme } = useTheme()
 
 // Get current user from Inertia page props
 const page = usePage()
@@ -223,12 +226,6 @@ const userInitials = computed(() => {
 })
 
 // Methods
-const toggleTheme = () => {
-  isDark.value = !isDark.value
-  document.documentElement.classList.toggle('dark', isDark.value)
-  localStorage.setItem('theme', isDark.value ? 'dark' : 'light')
-}
-
 const toggleUserDropdown = () => {
   showUserDropdown.value = !showUserDropdown.value
 }
@@ -253,14 +250,8 @@ const handleClickOutside = (event: MouseEvent) => {
   }
 }
 
-// Initialize theme
+// Initialize click outside handler
 onMounted(() => {
-  const savedTheme = localStorage.getItem('theme')
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-
-  isDark.value = savedTheme === 'dark' || (!savedTheme && prefersDark)
-  document.documentElement.classList.toggle('dark', isDark.value)
-
   document.addEventListener('click', handleClickOutside)
 })
 

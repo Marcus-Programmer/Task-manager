@@ -116,8 +116,12 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 import { Link, useForm } from '@inertiajs/vue3'
+import { useTheme } from '@/composables/useTheme'
 
 console.log('Login.vue: Component loading!')
+
+// Initialize theme system
+const { initTheme } = useTheme()
 
 // Global route function (available via ZiggyVue plugin)
 declare const route: any
