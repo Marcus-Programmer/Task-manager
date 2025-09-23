@@ -81,9 +81,9 @@
               <Button
                 type="submit"
                 class="w-full flex justify-center"
-                :disabled="loading"
+                :disabled="loading.value"
               >
-                <Loader2 v-if="loading" class="mr-2 h-4 w-4 animate-spin" />
+                <Loader2 v-if="loading.value" class="mr-2 h-4 w-4 animate-spin" />
                 Sign in
               </Button>
             </div>
@@ -141,11 +141,19 @@ import Button from '@/components/ui/Button.vue'
 import Input from '@/components/ui/Input.vue'
 import Label from '@/components/ui/Label.vue'
 
-// Composables
-import { useAuth } from '@/composables/useAuth'
+// Temporary simple auth handling
+const loading = reactive({ value: false })
+const errors = reactive<Record<string, string>>({})
 
-// Use auth store
-const { handleLogin, loading, hasError, getError, clearErrors } = useAuth()
+const hasError = (field: string): boolean => !!errors[field]
+const getError = (field: string): string => errors[field] || ''
+const clearErrors = () => Object.keys(errors).forEach(key => delete errors[key])
+
+const handleLogin = async (credentials: any) => {
+  // Temporary mock login
+  console.log('Login attempt:', credentials)
+  return true
+}
 
 // Global route function (available via ZiggyVue plugin)
 declare const route: any
