@@ -61,6 +61,12 @@
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <Link :href="route('profile.edit')" class="flex items-center w-full">
+                    <Settings class="mr-2 h-4 w-4" />
+                    Edit Profile
+                  </Link>
+                </DropdownMenuItem>
                 <DropdownMenuItem @click="logout">
                   <LogOut class="mr-2 h-4 w-4" />
                   Log out
@@ -115,6 +121,12 @@
           </div>
 
           <div class="mt-3 space-y-1">
+            <Link
+              :href="route('profile.edit')"
+              class="block px-4 py-2 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+            >
+              Edit Profile
+            </Link>
             <button
               @click="logout"
               class="block w-full px-4 py-2 text-left text-base font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
@@ -160,7 +172,8 @@ import {
   Moon,
   LogOut,
   CheckCircle,
-  AlertCircle
+  AlertCircle,
+  Settings
 } from 'lucide-vue-next'
 
 // Components
