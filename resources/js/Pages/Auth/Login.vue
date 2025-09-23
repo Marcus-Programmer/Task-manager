@@ -15,19 +15,21 @@
       </div>
 
       <!-- Login Form -->
-      <Card>
-        <div class="p-6">
-          <form @submit.prevent="handleSubmit" class="space-y-6">
-            <!-- Email Field -->
-            <div>
-              <Label for="email">Email address</Label>
-              <Input
+      <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+        <form @submit.prevent="handleSubmit" class="space-y-6">
+          <!-- Email Field -->
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700">
+              Email address
+            </label>
+            <div class="mt-1">
+              <input
                 id="email"
                 v-model="form.email"
                 type="email"
                 autocomplete="email"
                 required
-                class="mt-1"
+                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 :class="{ 'border-red-500': hasError('email') }"
                 placeholder="Enter your email"
               />
@@ -35,17 +37,21 @@
                 {{ getError('email') }}
               </p>
             </div>
+          </div>
 
-            <!-- Password Field -->
-            <div>
-              <Label for="password">Password</Label>
-              <Input
+          <!-- Password Field -->
+          <div>
+            <label for="password" class="block text-sm font-medium text-gray-700">
+              Password
+            </label>
+            <div class="mt-1">
+              <input
                 id="password"
                 v-model="form.password"
                 type="password"
                 autocomplete="current-password"
                 required
-                class="mt-1"
+                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 :class="{ 'border-red-500': hasError('password') }"
                 placeholder="Enter your password"
               />
@@ -53,78 +59,72 @@
                 {{ getError('password') }}
               </p>
             </div>
+          </div>
 
-            <!-- Remember Me -->
-            <div class="flex items-center justify-between">
-              <div class="flex items-center">
-                <input
-                  id="remember"
-                  v-model="form.remember"
-                  type="checkbox"
-                  class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                />
-                <Label for="remember" class="ml-2 block text-sm text-gray-900">
-                  Remember me
-                </Label>
+          <!-- Remember Me -->
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              <input
+                id="remember"
+                v-model="form.remember"
+                type="checkbox"
+                class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+              />
+              <label for="remember" class="ml-2 block text-sm text-gray-900">
+                Remember me
+              </label>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div>
+            <button
+              type="submit"
+              class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              :disabled="form.processing"
+            >
+              <span v-if="form.processing" class="mr-2">
+                ⏳
+              </span>
+              Sign in
+            </button>
+          </div>
+
+          <!-- General Error -->
+          <div v-if="hasError('general')" class="rounded-md bg-red-50 p-4">
+            <div class="flex">
+              <div class="flex-shrink-0">
+                ⚠️
               </div>
-
-              <!-- Password reset temporarily disabled -->
-              <!-- <div class="text-sm">
-                <Link :href="route('password.request')" class="font-medium text-indigo-600 hover:text-indigo-500">
-                  Forgot your password?
-                </Link>
-              </div> -->
-            </div>
-
-            <!-- Submit Button -->
-            <div>
-              <Button
-                type="submit"
-                class="w-full flex justify-center"
-                :disabled="loading.value"
-              >
-                <Loader2 v-if="loading.value" class="mr-2 h-4 w-4 animate-spin" />
-                Sign in
-              </Button>
-            </div>
-
-            <!-- General Error -->
-            <div v-if="hasError('general')" class="rounded-md bg-red-50 p-4">
-              <div class="flex">
-                <AlertCircle class="h-5 w-5 text-red-400" />
-                <div class="ml-3">
-                  <h3 class="text-sm font-medium text-red-800">
-                    Authentication failed
-                  </h3>
-                  <p class="mt-2 text-sm text-red-700">
-                    {{ getError('general') }}
-                  </p>
-                </div>
+              <div class="ml-3">
+                <h3 class="text-sm font-medium text-red-800">
+                  Authentication failed
+                </h3>
+                <p class="mt-2 text-sm text-red-700">
+                  {{ getError('general') }}
+                </p>
               </div>
             </div>
-          </form>
-        </div>
-      </Card>
+          </div>
+        </form>
+      </div>
 
       <!-- Demo Credentials -->
       <div class="mt-6">
-        <Card>
-          <div class="p-4 bg-blue-50">
-            <h3 class="text-sm font-medium text-blue-800 mb-2">Demo Credentials</h3>
-            <p class="text-xs text-blue-700">
-              Email: demo@taskmanager.com<br>
-              Password: password
-            </p>
-            <Button
-              variant="outline"
-              size="sm"
-              class="mt-2"
-              @click="fillDemoCredentials"
-            >
-              Use Demo Credentials
-            </Button>
-          </div>
-        </Card>
+        <div class="bg-blue-50 border border-blue-200 rounded-md p-4">
+          <h3 class="text-sm font-medium text-blue-800 mb-2">Demo Credentials</h3>
+          <p class="text-xs text-blue-700">
+            Email: demo@taskmanager.com<br>
+            Password: password
+          </p>
+          <button
+            type="button"
+            class="mt-2 inline-flex items-center px-3 py-1 border border-blue-300 text-xs leading-4 font-medium rounded text-blue-700 bg-white hover:bg-blue-50"
+            @click="fillDemoCredentials"
+          >
+            Use Demo Credentials
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -132,53 +132,57 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue'
-import { Link } from '@inertiajs/vue3'
-import { Loader2, AlertCircle } from 'lucide-vue-next'
+import { Link, useForm } from '@inertiajs/vue3'
 
-// Components
-import Card from '@/components/ui/Card.vue'
-import Button from '@/components/ui/Button.vue'
-import Input from '@/components/ui/Input.vue'
-import Label from '@/components/ui/Label.vue'
-
-// Temporary simple auth handling
-const loading = reactive({ value: false })
-const errors = reactive<Record<string, string>>({})
-
-const hasError = (field: string): boolean => !!errors[field]
-const getError = (field: string): string => errors[field] || ''
-const clearErrors = () => Object.keys(errors).forEach(key => delete errors[key])
-
-const handleLogin = async (credentials: any) => {
-  // Temporary mock login
-  console.log('Login attempt:', credentials)
-  return true
-}
+console.log('Login.vue: Component loading!')
 
 // Global route function (available via ZiggyVue plugin)
 declare const route: any
 
-// Form data
-const form = reactive({
+// Props from backend (for error handling)
+interface Props {
+  errors?: Record<string, string>
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  errors: () => ({})
+})
+
+// Inertia.js form handling
+const form = useForm({
   email: '',
   password: '',
   remember: false
 })
 
-// Handle form submission
-const handleSubmit = async () => {
-  clearErrors()
+// Helper functions for error handling
+const hasError = (field: string): boolean => {
+  return !!(props.errors[field] || form.errors[field])
+}
 
-  const success = await handleLogin({
+const getError = (field: string): string => {
+  return props.errors[field] || form.errors[field] || ''
+}
+
+// Handle form submission
+const handleSubmit = () => {
+  console.log('Submitting login form:', {
     email: form.email,
     password: form.password,
     remember: form.remember
   })
 
-  if (success) {
-    // Redirect will be handled by Inertia
-    console.log('Login successful')
-  }
+  form.post(route('login'), {
+    onFinish: () => {
+      console.log('Login request completed')
+    },
+    onError: (errors) => {
+      console.error('Login errors:', errors)
+    },
+    onSuccess: () => {
+      console.log('Login successful! Redirecting...')
+    }
+  })
 }
 
 // Fill demo credentials
@@ -186,6 +190,8 @@ const fillDemoCredentials = () => {
   form.email = 'demo@taskmanager.com'
   form.password = 'password'
 }
+
+console.log('Login.vue: Component setup complete!')
 
 // Set page title
 defineOptions({

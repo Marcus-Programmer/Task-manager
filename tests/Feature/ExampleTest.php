@@ -12,8 +12,12 @@ class ExampleTest extends TestCase
      */
     public function test_the_application_returns_a_successful_response(): void
     {
+        // Guest user should be redirected to login
         $response = $this->get('/');
+        $response->assertRedirect('/login');
 
-        $response->assertStatus(200);
+        // Login page should load successfully
+        $loginResponse = $this->get('/login');
+        $loginResponse->assertStatus(200);
     }
 }

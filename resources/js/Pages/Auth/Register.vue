@@ -15,19 +15,21 @@
       </div>
 
       <!-- Register Form -->
-      <Card>
-        <div class="p-6">
-          <form @submit.prevent="handleSubmit" class="space-y-6">
-            <!-- Name Field -->
-            <div>
-              <Label for="name">Full name</Label>
-              <Input
+      <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+        <form @submit.prevent="handleSubmit" class="space-y-6">
+          <!-- Name Field -->
+          <div>
+            <label for="name" class="block text-sm font-medium text-gray-700">
+              Full name
+            </label>
+            <div class="mt-1">
+              <input
                 id="name"
                 v-model="form.name"
                 type="text"
                 autocomplete="name"
                 required
-                class="mt-1"
+                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 :class="{ 'border-red-500': hasError('name') }"
                 placeholder="Enter your full name"
               />
@@ -35,17 +37,21 @@
                 {{ getError('name') }}
               </p>
             </div>
+          </div>
 
-            <!-- Email Field -->
-            <div>
-              <Label for="email">Email address</Label>
-              <Input
+          <!-- Email Field -->
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700">
+              Email address
+            </label>
+            <div class="mt-1">
+              <input
                 id="email"
                 v-model="form.email"
                 type="email"
                 autocomplete="email"
                 required
-                class="mt-1"
+                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 :class="{ 'border-red-500': hasError('email') }"
                 placeholder="Enter your email"
               />
@@ -53,17 +59,21 @@
                 {{ getError('email') }}
               </p>
             </div>
+          </div>
 
-            <!-- Password Field -->
-            <div>
-              <Label for="password">Password</Label>
-              <Input
+          <!-- Password Field -->
+          <div>
+            <label for="password" class="block text-sm font-medium text-gray-700">
+              Password
+            </label>
+            <div class="mt-1">
+              <input
                 id="password"
                 v-model="form.password"
                 type="password"
                 autocomplete="new-password"
                 required
-                class="mt-1"
+                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 :class="{ 'border-red-500': hasError('password') }"
                 placeholder="Create a password"
               />
@@ -74,17 +84,21 @@
                 Must be at least 8 characters long
               </p>
             </div>
+          </div>
 
-            <!-- Password Confirmation Field -->
-            <div>
-              <Label for="password_confirmation">Confirm password</Label>
-              <Input
+          <!-- Password Confirmation Field -->
+          <div>
+            <label for="password_confirmation" class="block text-sm font-medium text-gray-700">
+              Confirm password
+            </label>
+            <div class="mt-1">
+              <input
                 id="password_confirmation"
                 v-model="form.password_confirmation"
                 type="password"
                 autocomplete="new-password"
                 required
-                class="mt-1"
+                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 :class="{ 'border-red-500': hasError('password_confirmation') }"
                 placeholder="Confirm your password"
               />
@@ -92,91 +106,90 @@
                 {{ getError('password_confirmation') }}
               </p>
             </div>
+          </div>
 
-            <!-- Terms Agreement -->
-            <div class="flex items-center">
-              <input
-                id="terms"
-                v-model="form.terms"
-                type="checkbox"
-                required
-                class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-              />
-              <Label for="terms" class="ml-2 block text-sm text-gray-900">
-                I agree to the
-                <a href="#" class="text-indigo-600 hover:text-indigo-500">Terms of Service</a>
-                and
-                <a href="#" class="text-indigo-600 hover:text-indigo-500">Privacy Policy</a>
-              </Label>
-            </div>
+          <!-- Terms Agreement -->
+          <div class="flex items-center">
+            <input
+              id="terms"
+              v-model="form.terms"
+              type="checkbox"
+              required
+              class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+            />
+            <label for="terms" class="ml-2 block text-sm text-gray-900">
+              I agree to the
+              <a href="#" class="text-indigo-600 hover:text-indigo-500">Terms of Service</a>
+              and
+              <a href="#" class="text-indigo-600 hover:text-indigo-500">Privacy Policy</a>
+            </label>
+          </div>
 
-            <!-- Submit Button -->
-            <div>
-              <Button
-                type="submit"
-                class="w-full flex justify-center"
-                :disabled="loading || !form.terms"
-              >
-                <Loader2 v-if="loading" class="mr-2 h-4 w-4 animate-spin" />
-                Create account
-              </Button>
-            </div>
+          <!-- Submit Button -->
+          <div>
+            <button
+              type="submit"
+              class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              :disabled="form.processing || !form.terms"
+            >
+              <span v-if="form.processing" class="mr-2">
+                ⏳
+              </span>
+              Create account
+            </button>
+          </div>
 
-            <!-- General Error -->
-            <div v-if="hasError('general')" class="rounded-md bg-red-50 p-4">
-              <div class="flex">
-                <AlertCircle class="h-5 w-5 text-red-400" />
-                <div class="ml-3">
-                  <h3 class="text-sm font-medium text-red-800">
-                    Registration failed
-                  </h3>
-                  <p class="mt-2 text-sm text-red-700">
-                    {{ getError('general') }}
-                  </p>
-                </div>
+          <!-- General Error -->
+          <div v-if="hasError('general')" class="rounded-md bg-red-50 p-4">
+            <div class="flex">
+              <div class="flex-shrink-0">
+                ⚠️
+              </div>
+              <div class="ml-3">
+                <h3 class="text-sm font-medium text-red-800">
+                  Registration failed
+                </h3>
+                <p class="mt-2 text-sm text-red-700">
+                  {{ getError('general') }}
+                </p>
               </div>
             </div>
-          </form>
-        </div>
-      </Card>
+          </div>
+        </form>
+      </div>
 
       <!-- Security Note -->
       <div class="mt-6">
-        <Card>
-          <div class="p-4 bg-green-50">
-            <h3 class="text-sm font-medium text-green-800 mb-2">Secure & Private</h3>
-            <p class="text-xs text-green-700">
-              Your data is encrypted and secure. We never share your information with third parties.
-            </p>
-          </div>
-        </Card>
+        <div class="bg-green-50 border border-green-200 rounded-md p-4">
+          <h3 class="text-sm font-medium text-green-800 mb-2">Secure & Private</h3>
+          <p class="text-xs text-green-700">
+            Your data is encrypted and secure. We never share your information with third parties.
+          </p>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue'
-import { Link } from '@inertiajs/vue3'
-import { Loader2, AlertCircle } from 'lucide-vue-next'
+import { Link, useForm } from '@inertiajs/vue3'
 
-// Components
-import Card from '@/components/ui/Card.vue'
-import Button from '@/components/ui/Button.vue'
-import Input from '@/components/ui/Input.vue'
-import Label from '@/components/ui/Label.vue'
-
-// Composables
-import { useAuth } from '@/composables/useAuth'
-
-// Use auth store
-const { handleRegister, loading, hasError, getError, clearErrors } = useAuth()
+console.log('Register.vue: Component loading!')
 
 // Global route function (available via ZiggyVue plugin)
 declare const route: any
 
-// Form data
-const form = reactive({
+// Props from backend (for error handling)
+interface Props {
+  errors?: Record<string, string>
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  errors: () => ({})
+})
+
+// Inertia.js form handling
+const form = useForm({
   name: '',
   email: '',
   password: '',
@@ -184,22 +197,39 @@ const form = reactive({
   terms: false
 })
 
-// Handle form submission
-const handleSubmit = async () => {
-  clearErrors()
+// Helper functions for error handling
+const hasError = (field: string): boolean => {
+  return !!(props.errors[field] || form.errors[field])
+}
 
-  const success = await handleRegister({
+const getError = (field: string): string => {
+  return props.errors[field] || form.errors[field] || ''
+}
+
+// Handle form submission
+const handleSubmit = () => {
+  console.log('Submitting registration form:', {
     name: form.name,
     email: form.email,
-    password: form.password,
-    password_confirmation: form.password_confirmation
+    password: '***',
+    password_confirmation: '***',
+    terms: form.terms
   })
 
-  if (success) {
-    // Redirect will be handled by Inertia
-    console.log('Registration successful')
-  }
+  form.post(route('register'), {
+    onFinish: () => {
+      console.log('Registration request completed')
+    },
+    onError: (errors) => {
+      console.error('Registration errors:', errors)
+    },
+    onSuccess: () => {
+      console.log('Registration successful! Redirecting...')
+    }
+  })
 }
+
+console.log('Register.vue: Component setup complete!')
 
 // Set page title
 defineOptions({
