@@ -17,7 +17,7 @@
 
         <!-- Status Filter -->
         <div class="sm:w-40">
-          <Select v-model="localFilters.status" @change="handleFiltersChange">
+          <Select v-model="localFilters.status">
             <option value="">All Status</option>
             <option value="pending">Pending</option>
             <option value="in_progress">In Progress</option>
@@ -93,6 +93,14 @@ watch(
     localFilters.status = newFilters.status || ''
   },
   { deep: true }
+)
+
+// Watch for local filter changes and emit them
+watch(
+  () => localFilters.status,
+  () => {
+    handleFiltersChange()
+  }
 )
 
 const hasActiveFilters = computed(() => {

@@ -89,7 +89,6 @@
           :key="task.id"
           :task="task"
           @status-change="handleStatusChange"
-          @edit="handleEditTask"
           @delete="handleDeleteTask"
         />
       </div>
@@ -156,11 +155,10 @@
       </div>
     </div>
 
-    <!-- Create/Edit Task Modal -->
-    <div v-if="showCreateModal || editingTask" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+    <!-- Create Task Modal -->
+    <div v-if="showCreateModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div class="bg-card rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-md border">
         <TaskForm
-          :task="editingTask"
           :loading="loading"
           :errors="errors"
           @submit="handleTaskSubmit"
@@ -225,15 +223,11 @@ import TaskCard from '@/Components/Task/TaskCard.vue'
 import TaskForm from '@/Components/Task/TaskForm.vue'
 import TaskFiltersComponent from '@/Components/Task/TaskFilters.vue'
 
-// Global route function
-declare const route: any
-
 // Props from Inertia
 const props = defineProps<TaskIndexProps>()
 
 // Local state
 const showCreateModal = ref(false)
-const editingTask = ref<Task | null>(null)
 const deletingTask = ref<Task | null>(null)
 const loading = ref(false)
 const errors = ref<Record<string, string>>({})
@@ -270,21 +264,17 @@ const handleFiltersChange = (newFilters: TaskFilters) => {
   if (newFilters.search) params.set('search', newFilters.search)
   if (newFilters.status) params.set('status', newFilters.status)
 
-  router.get(`${route('tasks.index')}?${params}`, {}, {
+  router.get(`/tasks?${params}`, {}, {
     preserveState: true,
     preserveScroll: true
   })
 }
 
 const handleResetFilters = () => {
-  router.get(route('tasks.index'), {}, {
+  router.get('/tasks', {}, {
     preserveState: true,
     preserveScroll: true
   })
-}
-
-const handleEditTask = (task: Task) => {
-  editingTask.value = task
 }
 
 const handleDeleteTask = (task: Task) => {
@@ -306,36 +296,21 @@ const handleTaskSubmit = (data: TaskFormData) => {
   errors.value = {}
   loading.value = true
 
-  if (editingTask.value) {
-    router.put(`/tasks/${editingTask.value.id}`, data, {
-      onSuccess: () => {
-        handleCloseModal()
-      },
-      onError: (formErrors) => {
-        errors.value = formErrors
-      },
-      onFinish: () => {
-        loading.value = false
-      }
-    })
-  } else {
-    router.post('/tasks', data, {
-      onSuccess: () => {
-        handleCloseModal()
-      },
-      onError: (formErrors) => {
-        errors.value = formErrors
-      },
-      onFinish: () => {
-        loading.value = false
-      }
-    })
-  }
+  router.post('/tasks', data, {
+    onSuccess: () => {
+      handleCloseModal()
+    },
+    onError: (formErrors) => {
+      errors.value = formErrors
+    },
+    onFinish: () => {
+      loading.value = false
+    }
+  })
 }
 
 const handleCloseModal = () => {
   showCreateModal.value = false
-  editingTask.value = null
   errors.value = {}
 }
 
@@ -345,7 +320,7 @@ const goToPage = (page: number) => {
     if (props.filters.search) params.set('search', props.filters.search)
     if (props.filters.status) params.set('status', props.filters.status)
 
-    router.get(`${route('tasks.index')}?${params}`, {}, {
+    router.get(`/tasks?${params}`, {}, {
       preserveState: true,
       preserveScroll: true
     })
