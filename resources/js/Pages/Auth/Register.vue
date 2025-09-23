@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full space-y-8">
       <!-- Header -->
       <div>
@@ -15,7 +15,7 @@
       </div>
 
       <!-- Register Form -->
-      <div class="bg-gray-50 dark:bg-gray-800 py-8 px-4 shadow-xl border border-gray-200 dark:border-gray-700 sm:rounded-xl sm:px-10">
+      <div class="bg-white dark:bg-gray-800 py-8 px-4 shadow-xl border border-gray-200 dark:border-gray-700 sm:rounded-xl sm:px-10">
         <form @submit.prevent="handleSubmit" class="space-y-6">
           <!-- Name Field -->
           <div>
@@ -117,7 +117,7 @@
               required
               class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700"
             />
-            <label for="terms" class="ml-2 block text-sm text-gray-900 dark:text-gray-300">
+            <label for="terms" class="ml-2 block text-sm text-gray-700 dark:text-gray-300">
               I agree to the
               <a href="#" class="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">Terms of Service</a>
               and
@@ -160,7 +160,7 @@
 
       <!-- Security Note -->
       <div class="mt-6">
-        <div class="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-md p-4">
+        <div class="bg-green-100 dark:bg-green-900/20 border border-green-300 dark:border-green-800 rounded-md p-4">
           <h3 class="text-sm font-medium text-green-800 dark:text-green-400 mb-2">Secure & Private</h3>
           <p class="text-xs text-green-700 dark:text-green-300">
             Your data is encrypted and secure. We never share your information with third parties.
