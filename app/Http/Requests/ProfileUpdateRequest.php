@@ -32,8 +32,6 @@ class ProfileUpdateRequest extends FormRequest
                 'max:255',
                 Rule::unique('users')->ignore($this->user()->id),
             ],
-            'password' => ['nullable', 'string', 'min:8', 'confirmed'],
-            'password_confirmation' => ['nullable', 'string', 'min:8'],
         ];
     }
 
@@ -48,8 +46,6 @@ class ProfileUpdateRequest extends FormRequest
             'email.required' => 'The email field is required.',
             'email.email' => 'The email must be a valid email address.',
             'email.unique' => 'The email has already been taken.',
-            'password.min' => 'The password must be at least 8 characters.',
-            'password.confirmed' => 'The password confirmation does not match.',
         ];
     }
 }

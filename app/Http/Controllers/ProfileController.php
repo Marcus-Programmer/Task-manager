@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Requests\PasswordUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,15 +43,26 @@ class ProfileController extends Controller
             $user->email_verified_at = null;
         }
 
-        // Update password if provided
-        if (!empty($validated['password'])) {
-            $user->password = Hash::make($validated['password']);
-        }
-
         $user->save();
 
         return redirect()->route('profile.edit')
             ->with('success', 'Profile updated successfully.');
+    }
+
+    /**
+     * Update the user's password.
+     */
+    public function updatePassword(PasswordUpdateRequest $request): RedirectResponse
+    {
+        $user = $request->user();
+        $validated = $request->validated();
+
+        // Update password
+        $user->password = Hash::make($validated['password']);
+        $user->save();
+
+        return redirect()->route('profile.edit')
+            ->with('success', 'Password updated successfully.');
     }
 
     /**

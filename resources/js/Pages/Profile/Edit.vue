@@ -258,7 +258,7 @@ const updateProfile = () => {
 }
 
 const updatePassword = () => {
-  passwordForm.patch(route('profile.update'), {
+  passwordForm.patch(route('profile.password'), {
     preserveScroll: true,
     onSuccess: () => {
       passwordForm.reset()
