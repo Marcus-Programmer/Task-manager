@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full space-y-8">
       <!-- Header -->
       <div>
@@ -15,7 +15,7 @@
       </div>
 
       <!-- Login Form -->
-      <div class="bg-white dark:bg-gray-800 py-8 px-4 shadow sm:rounded-lg sm:px-10">
+      <div class="bg-gray-50 dark:bg-gray-800 py-8 px-4 shadow-xl border border-gray-200 dark:border-gray-700 sm:rounded-xl sm:px-10">
         <form @submit.prevent="handleSubmit" class="space-y-6">
           <!-- Email Field -->
           <div>
