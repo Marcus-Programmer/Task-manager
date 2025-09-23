@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
 @layer base {
   :root {
@@ -33,19 +31,19 @@
     --card-foreground: 210 40% 98%;
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
+    --primary: 210 40% 98%;
     --primary-foreground: 222.2 84% 4.9%;
-    --secondary: 217.2 32.6% 17.5%;
+    --secondary: 215 27.9% 16.9%;
     --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
+    --muted: 215 27.9% 16.9%;
+    --muted-foreground: 217.9 10.6% 64.9%;
+    --accent: 215 27.9% 16.9%;
     --accent-foreground: 210 40% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 94.1%;
+    --border: 215 27.9% 16.9%;
+    --input: 215 27.9% 16.9%;
+    --ring: 216 12.2% 83.9%;
   }
 }
 
@@ -53,8 +51,172 @@
   * {
     border-color: hsl(var(--border));
   }
+
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
+  }
+
+  /* =======================
+     MODO CLARO - Light Mode
+     ======================= */
+
+  /* Formulários no modo claro */
+  :root input,
+  :root textarea,
+  :root select {
+    background-color: white;
+    color: rgb(17, 24, 39); /* gray-900 */
+    border-color: rgb(209, 213, 219); /* gray-300 */
+    border-width: 1px;
+  }
+
+  :root input:focus,
+  :root textarea:focus,
+  :root select:focus {
+    border-color: rgb(59, 130, 246); /* blue-500 */
+    outline: none;
+    box-shadow: 0 0 0 3px rgb(59 130 246 / 0.1);
+  }
+
+  /* Cards e modais no modo claro */
+  :root .bg-card {
+    background-color: white !important;
+    color: rgb(17, 24, 39) !important; /* gray-900 */
+  }
+
+  :root .bg-white {
+    background-color: white !important;
+    color: rgb(17, 24, 39) !important;
+  }
+
+  :root .text-card-foreground {
+    color: rgb(17, 24, 39) !important; /* gray-900 */
+  }
+
+  :root .text-gray-900 {
+    color: rgb(17, 24, 39) !important;
+  }
+
+  /* Dropdowns no modo claro */
+  :root select option {
+    background-color: white;
+    color: rgb(17, 24, 39);
+  }
+
+  /* =======================
+     MODO ESCURO - Dark Mode
+     ======================= */
+
+  /* Formulários no modo escuro */
+  .dark input,
+  .dark textarea,
+  .dark select {
+    background-color: hsl(222.2 84% 4.9%); /* dark background */
+    color: hsl(210 40% 98%); /* light text */
+    border-color: hsl(215 27.9% 25%); /* visible border in dark */
+    border-width: 1px;
+  }
+
+  .dark input:focus,
+  .dark textarea:focus,
+  .dark select:focus {
+    border-color: hsl(217.2 91.2% 59.8%); /* blue focus in dark */
+    outline: none;
+    box-shadow: 0 0 0 3px hsl(217.2 91.2% 59.8% / 0.1);
+  }
+
+  /* Cards e modais no modo escuro */
+  .dark .bg-card {
+    background-color: hsl(222.2 84% 4.9%) !important;
+    color: hsl(210 40% 98%) !important;
+  }
+
+  .dark .bg-white {
+    background-color: hsl(222.2 84% 4.9%) !important;
+    color: hsl(210 40% 98%) !important;
+  }
+
+  .dark .text-card-foreground {
+    color: hsl(210 40% 98%) !important;
+  }
+
+  .dark .text-gray-900 {
+    color: hsl(210 40% 98%) !important;
+  }
+
+  /* Dropdowns no modo escuro */
+  .dark select {
+    color-scheme: dark;
+  }
+
+  .dark select option {
+    background-color: hsl(222.2 84% 4.9%);
+    color: hsl(210 40% 98%);
+  }
+
+  /* =======================
+     COMPONENTES ESPECÍFICOS
+     ======================= */
+
+  /* Botões de ação */
+  :root .btn-primary {
+    background-color: rgb(59, 130, 246);
+    color: white;
+  }
+
+  .dark .btn-primary {
+    background-color: hsl(217.2 91.2% 59.8%);
+    color: hsl(222.2 84% 4.9%);
+  }
+
+  /* Borders para componentes */
+  :root .border {
+    border-color: rgb(229, 231, 235); /* gray-200 */
+  }
+
+  .dark .border {
+    border-color: hsl(215 27.9% 16.9%);
+  }
+
+  /* Text colors para títulos */
+  :root h1,
+  :root h2,
+  :root h3,
+  :root h4,
+  :root h5,
+  :root h6 {
+    color: rgb(17, 24, 39); /* gray-900 */
+  }
+
+  .dark h1,
+  .dark h2,
+  .dark h3,
+  .dark h4,
+  .dark h5,
+  .dark h6 {
+    color: hsl(210 40% 98%);
+  }
+
+  /* Popover e dropdown menus */
+  :root .bg-popover {
+    background-color: white;
+    color: rgb(17, 24, 39);
+    border-color: rgb(229, 231, 235);
+  }
+
+  .dark .bg-popover {
+    background-color: hsl(222.2 84% 4.9%);
+    color: hsl(210 40% 98%);
+    border-color: hsl(215 27.9% 16.9%);
+  }
+
+  /* Shadow para modais */
+  :root .shadow-md {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  }
+
+  .dark .shadow-md {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.2);
   }
 }

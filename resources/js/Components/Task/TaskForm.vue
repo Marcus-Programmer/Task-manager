@@ -1,7 +1,7 @@
 <template>
   <Card>
     <div class="p-6">
-      <h2 class="text-lg font-semibold mb-6">
+      <h2 class="text-lg font-semibold mb-6 text-card-foreground">
         {{ task ? 'Edit Task' : 'Create New Task' }}
       </h2>
 

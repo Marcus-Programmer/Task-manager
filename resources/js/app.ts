@@ -5,6 +5,7 @@ import { createApp, h, DefineComponent } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/index.esm.js';
+import { createPinia } from 'pinia';
 
 const appName = import.meta.env.VITE_APP_NAME || 'TaskManager';
 
@@ -24,7 +25,8 @@ createInertiaApp({
 
     const app = createApp({ render: () => h(App, props) })
       .use(plugin)
-      .use(ZiggyVue);
+      .use(ZiggyVue)
+      .use(createPinia());
 
     console.log('App.ts: Mounting Vue app...');
     const mountedApp = app.mount(el);

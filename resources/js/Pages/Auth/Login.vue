@@ -109,23 +109,6 @@
         </form>
       </div>
 
-      <!-- Demo Credentials -->
-      <div class="mt-6">
-        <div class="bg-blue-50 border border-blue-200 rounded-md p-4">
-          <h3 class="text-sm font-medium text-blue-800 mb-2">Demo Credentials</h3>
-          <p class="text-xs text-blue-700">
-            Email: demo@taskmanager.com<br>
-            Password: password
-          </p>
-          <button
-            type="button"
-            class="mt-2 inline-flex items-center px-3 py-1 border border-blue-300 text-xs leading-4 font-medium rounded text-blue-700 bg-white hover:bg-blue-50"
-            @click="fillDemoCredentials"
-          >
-            Use Demo Credentials
-          </button>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -185,11 +168,6 @@ const handleSubmit = () => {
   })
 }
 
-// Fill demo credentials
-const fillDemoCredentials = () => {
-  form.email = 'demo@taskmanager.com'
-  form.password = 'password'
-}
 
 console.log('Login.vue: Component setup complete!')
 
