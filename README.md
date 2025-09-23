@@ -73,7 +73,17 @@ cp .env.example .env
 # As configurações padrão do Sail já funcionam
 ```
 
-### 3. Inicie o Ambiente Docker
+### 3. Bootstrap inicial (somente na primeira vez)
+```bash
+docker run --rm \
+    -u "$(id -u):$(id -g)" \
+    -v "$(pwd):/var/www/html" \
+    -w /var/www/html \
+    laravelsail/php83-composer:latest \
+    composer install --ignore-platform-reqs
+```
+
+### 4. Inicie o Ambiente Docker
 ```bash
 # Inicie todos os serviços (MySQL, Redis, Mailpit)
 ./vendor/bin/sail up -d
@@ -81,7 +91,7 @@ cp .env.example .env
 # Aguarde alguns segundos para os serviços iniciarem
 ```
 
-### 4. Configure a Aplicação
+### 5. Configure a Aplicação
 ```bash
 # Gere a chave da aplicação
 ./vendor/bin/sail artisan key:generate
@@ -96,7 +106,7 @@ cp .env.example .env
 ./vendor/bin/sail npm run dev
 ```
 
-### 5. Acesse a Aplicação
+### 6. Acesse a Aplicação
 - **Aplicação**: http://localhost
 - **Mailpit** (emails): http://localhost:8025
 - **Banco de dados**: localhost:3306
