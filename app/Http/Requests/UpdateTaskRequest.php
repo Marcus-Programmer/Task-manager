@@ -13,11 +13,22 @@ class UpdateTaskRequest extends FormRequest
 
     public function rules(): array
     {
-        return [
-            'title' => 'sometimes|required|string|min:3|max:255',
-            'description' => 'nullable|string|max:1000',
-            'status' => 'nullable|in:pending,in_progress,done',
-        ];
+        $rules = [];
+
+        // Only validate fields that are present in the request
+        if ($this->has('title')) {
+            $rules['title'] = 'required|string|min:3|max:255';
+        }
+
+        if ($this->has('description')) {
+            $rules['description'] = 'nullable|string|max:1000';
+        }
+
+        if ($this->has('status')) {
+            $rules['status'] = 'nullable|in:pending,in_progress,done';
+        }
+
+        return $rules;
     }
 
     public function messages(): array

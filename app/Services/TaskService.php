@@ -30,7 +30,7 @@ class TaskService
 
     public function updateTask(Task $task, array $data): Task
     {
-        $this->validateTaskData($data, $task->id);
+        $this->validateUpdateData($data, $task->id);
 
         return $this->taskRepository->update($task, $data);
     }
@@ -78,6 +78,23 @@ class TaskService
             ]);
         }
 
+        if (isset($data['status'])) {
+            $this->validateStatus($data['status']);
+        }
+    }
+
+    private function validateUpdateData(array $data, ?int $excludeId = null): void
+    {
+        // Only validate title if it's being updated
+        if (isset($data['title'])) {
+            if (empty($data['title']) || strlen(trim($data['title'])) < 3) {
+                throw ValidationException::withMessages([
+                    'title' => 'Task title must be at least 3 characters long.'
+                ]);
+            }
+        }
+
+        // Only validate status if it's being updated
         if (isset($data['status'])) {
             $this->validateStatus($data['status']);
         }
