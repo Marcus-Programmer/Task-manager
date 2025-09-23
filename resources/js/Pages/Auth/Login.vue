@@ -1,25 +1,25 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full space-y-8">
       <!-- Header -->
       <div>
-        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">
           Sign in to TaskManager
         </h2>
-        <p class="mt-2 text-center text-sm text-gray-600">
+        <p class="mt-2 text-center text-sm text-gray-600 dark:text-gray-300">
           Or
-          <Link :href="route('register')" class="font-medium text-indigo-600 hover:text-indigo-500">
+          <Link :href="route('register')" class="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">
             create a new account
           </Link>
         </p>
       </div>
 
       <!-- Login Form -->
-      <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+      <div class="bg-white dark:bg-gray-800 py-8 px-4 shadow sm:rounded-lg sm:px-10">
         <form @submit.prevent="handleSubmit" class="space-y-6">
           <!-- Email Field -->
           <div>
-            <label for="email" class="block text-sm font-medium text-gray-700">
+            <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
               Email address
             </label>
             <div class="mt-1">
@@ -29,11 +29,11 @@
                 type="email"
                 autocomplete="email"
                 required
-                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                class="appearance-none block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 :class="{ 'border-red-500': hasError('email') }"
                 placeholder="Enter your email"
               />
-              <p v-if="hasError('email')" class="mt-2 text-sm text-red-600">
+              <p v-if="hasError('email')" class="mt-2 text-sm text-red-600 dark:text-red-400">
                 {{ getError('email') }}
               </p>
             </div>
@@ -41,7 +41,7 @@
 
           <!-- Password Field -->
           <div>
-            <label for="password" class="block text-sm font-medium text-gray-700">
+            <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
               Password
             </label>
             <div class="mt-1">
@@ -51,11 +51,11 @@
                 type="password"
                 autocomplete="current-password"
                 required
-                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                class="appearance-none block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 :class="{ 'border-red-500': hasError('password') }"
                 placeholder="Enter your password"
               />
-              <p v-if="hasError('password')" class="mt-2 text-sm text-red-600">
+              <p v-if="hasError('password')" class="mt-2 text-sm text-red-600 dark:text-red-400">
                 {{ getError('password') }}
               </p>
             </div>
@@ -68,9 +68,9 @@
                 id="remember"
                 v-model="form.remember"
                 type="checkbox"
-                class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700"
               />
-              <label for="remember" class="ml-2 block text-sm text-gray-900">
+              <label for="remember" class="ml-2 block text-sm text-gray-900 dark:text-gray-300">
                 Remember me
               </label>
             </div>
@@ -91,16 +91,16 @@
           </div>
 
           <!-- General Error -->
-          <div v-if="hasError('general')" class="rounded-md bg-red-50 p-4">
+          <div v-if="hasError('general')" class="rounded-md bg-red-50 dark:bg-red-900/20 p-4">
             <div class="flex">
               <div class="flex-shrink-0">
                 ⚠️
               </div>
               <div class="ml-3">
-                <h3 class="text-sm font-medium text-red-800">
+                <h3 class="text-sm font-medium text-red-800 dark:text-red-400">
                   Authentication failed
                 </h3>
-                <p class="mt-2 text-sm text-red-700">
+                <p class="mt-2 text-sm text-red-700 dark:text-red-300">
                   {{ getError('general') }}
                 </p>
               </div>
