@@ -68,11 +68,12 @@
                 </Label>
               </div>
 
-              <div class="text-sm">
+              <!-- Password reset temporarily disabled -->
+              <!-- <div class="text-sm">
                 <Link :href="route('password.request')" class="font-medium text-indigo-600 hover:text-indigo-500">
                   Forgot your password?
                 </Link>
-              </div>
+              </div> -->
             </div>
 
             <!-- Submit Button -->
