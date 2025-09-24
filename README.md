@@ -117,12 +117,12 @@ O sistema vem com usuários pré-configurados para demonstração:
 
 ### 👤 Usuário Administrador
 - **Email**: `admin@taskmanager.com`
-- **Senha**: `password123`
+- **Senha**: `password`
 - **Descrição**: Conta de administrador com tarefas de exemplo
 
 ### 👤 Usuário Padrão
 - **Email**: `user@taskmanager.com`
-- **Senha**: `password123`
+- **Senha**: `password`
 - **Descrição**: Conta de usuário padrão com tarefas de teste
 
 ### 📊 Dados de Exemplo
@@ -382,10 +382,6 @@ Para problemas ou dúvidas:
 4. Revise a **documentação** do Laravel e Inertia.js
 
 ---
-
-<p align="center">
-  <strong>Desenvolvido com ❤️ usando Laravel + Vue.js + TypeScript</strong>
-</p>
 
 <p align="center">
   <em>Sistema completo de gerenciamento de tarefas com interface moderna e arquitetura profissional</em>
