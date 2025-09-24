@@ -114,7 +114,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { reactive, onMounted, onUnmounted } from 'vue'
 import { Link, useForm } from '@inertiajs/vue3'
 import { useTheme } from '@/composables/useTheme'
 
@@ -122,6 +122,15 @@ console.log('Login.vue: Component loading!')
 
 // Initialize theme system
 const { initTheme } = useTheme()
+
+// Add auth-page class to body
+onMounted(() => {
+  document.body.classList.add('auth-page')
+})
+
+onUnmounted(() => {
+  document.body.classList.remove('auth-page')
+})
 
 // Global route function (available via ZiggyVue plugin)
 declare const route: any
