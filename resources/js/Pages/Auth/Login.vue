@@ -1,12 +1,12 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="min-h-screen flex items-center justify-center bg-background py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full space-y-8">
       <!-- Header -->
       <div>
-        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">
+        <h2 class="mt-6 text-center text-3xl font-extrabold text-foreground">
           Sign in to TaskManager
         </h2>
-        <p class="mt-2 text-center text-sm text-gray-600 dark:text-gray-300">
+        <p class="mt-2 text-center text-sm text-muted-foreground">
           Or
           <Link :href="route('register')" class="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">
             create a new account
@@ -15,11 +15,11 @@
       </div>
 
       <!-- Login Form -->
-      <div class="bg-white dark:bg-gray-800 py-8 px-4 shadow-xl border border-gray-200 dark:border-gray-700 sm:rounded-xl sm:px-10">
+      <div class="bg-card py-8 px-4 shadow-xl border border-border sm:rounded-xl sm:px-10">
         <form @submit.prevent="handleSubmit" class="space-y-6">
           <!-- Email Field -->
           <div>
-            <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label for="email" class="block text-sm font-medium text-card-foreground">
               Email address
             </label>
             <div class="mt-1">
@@ -29,7 +29,7 @@
                 type="email"
                 autocomplete="email"
                 required
-                class="appearance-none block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                class="appearance-none block w-full px-3 py-2 border border-input rounded-md placeholder-muted-foreground bg-background text-foreground focus:outline-none focus:ring-ring focus:border-ring sm:text-sm"
                 :class="{ 'border-red-500': hasError('email') }"
                 placeholder="Enter your email"
               />
@@ -41,7 +41,7 @@
 
           <!-- Password Field -->
           <div>
-            <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label for="password" class="block text-sm font-medium text-card-foreground">
               Password
             </label>
             <div class="mt-1">
@@ -51,7 +51,7 @@
                 type="password"
                 autocomplete="current-password"
                 required
-                class="appearance-none block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                class="appearance-none block w-full px-3 py-2 border border-input rounded-md placeholder-muted-foreground bg-background text-foreground focus:outline-none focus:ring-ring focus:border-ring sm:text-sm"
                 :class="{ 'border-red-500': hasError('password') }"
                 placeholder="Enter your password"
               />
@@ -68,9 +68,9 @@
                 id="remember"
                 v-model="form.remember"
                 type="checkbox"
-                class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700"
+                class="h-4 w-4 text-primary focus:ring-ring border-input rounded bg-background"
               />
-              <label for="remember" class="ml-2 block text-sm text-gray-700 dark:text-gray-300">
+              <label for="remember" class="ml-2 block text-sm text-card-foreground">
                 Remember me
               </label>
             </div>
@@ -114,7 +114,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, onMounted, onUnmounted } from 'vue'
+import { reactive } from 'vue'
 import { Link, useForm } from '@inertiajs/vue3'
 import { useTheme } from '@/composables/useTheme'
 
@@ -123,14 +123,6 @@ console.log('Login.vue: Component loading!')
 // Initialize theme system
 const { initTheme } = useTheme()
 
-// Add auth-page class to body
-onMounted(() => {
-  document.body.classList.add('auth-page')
-})
-
-onUnmounted(() => {
-  document.body.classList.remove('auth-page')
-})
 
 // Global route function (available via ZiggyVue plugin)
 declare const route: any

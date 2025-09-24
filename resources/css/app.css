@@ -52,7 +52,7 @@
     border-color: hsl(var(--border));
   }
 
-  body:not(.auth-page) {
+  body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
   }
